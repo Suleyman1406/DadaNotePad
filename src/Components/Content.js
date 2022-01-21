@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import { useDispatch,useSelector } from 'react-redux';
-import { addNote, removeNote } from '../redux/noteslice';
+import { addNote, filterNotes, removeNote } from '../redux/noteslice';
 import {BsTrash} from 'react-icons/bs'
+import {BiSearchAlt} from 'react-icons/bi'
 const TitleInput=styled.input`
   width: 30%;
   padding: 10px;
@@ -64,8 +65,8 @@ const NoteContainer=styled.div`
     margin:20px auto;
 `
 const Note=styled.div`
-    width: 260px;
-    height: 320px;
+    width: 300px;
+    height: 350px;
     display: inline-block;
     border-radius: 15px;
     border:2px dashed ${props=>props.color};
@@ -88,11 +89,29 @@ const NoteBody=styled.p`
     overflow: auto;
     font-size: 14px;
 `
+const SearchContainer=styled.div`
+    position: relative;
+    width: 32%;
+    margin:25px auto;
+`
+const SearchInput=styled.input`
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    
+    border: 1px solid #7e57c2;
+    outline-color  :#512da8 ;
+    border-radius: 7px;
+
+`
+
+
 const Content = () => {
   const colorList=['rgba(240, 98, 146)','rgba(186, 104, 200)','rgba(79,195,247)','rgba(255, 213, 79)','rgba(174, 213, 129)']
   const [title,setTitle]=useState('');
   const [note,setNote]=useState('');
   const [color,setColor]=useState('');
+  const [search,setSearch]=useState('');
   const notes=useSelector((state)=>state.notes.value)
   const dispatch=useDispatch();
   const save=()=>{
@@ -104,6 +123,9 @@ const Content = () => {
               setTitle('');setNote('');setColor('');
             }
   }
+  useEffect(()=>{
+    dispatch(filterNotes(search));
+  },[search])
   return <>
       <TitleInput placeholder='Note Title' maxLength="22" value={title} onChange={(e)=>setTitle(e.target.value)}/>
       <br />
@@ -115,7 +137,11 @@ const Content = () => {
         }
         <SaveButton onClick={save}>Save ✓</SaveButton>
       </Container>
-      <NoteContainer>
+      <SearchContainer>
+        <SearchInput placeholder='Write to search..' value={search} onChange={(e)=>setSearch(e.target.value)}/>
+        <BiSearchAlt style={{position:'absolute',right:12,fontSize:22,top:7}}/>
+      </SearchContainer>
+      <NoteContainer> 
         {
           notes.map((note)=>{
             return <Note key={note.id} color={note.color+")"}>
