@@ -131,7 +131,7 @@ const Note = styled.div`
   display: inline-block;
   border-radius: 15px;
   border: 2px dashed ${(props) => props.color};
-  margin: 20px;
+  margin: 20px 20px 10px;
 
   @media only screen and (max-width: 850px) {
     width: 280px;
@@ -188,7 +188,7 @@ const NoteBody = styled.p`
 const SearchContainer = styled.div`
   position: relative;
   width: 32%;
-  margin: 25px auto;
+  margin: 20px auto 5px;
   @media only screen and (max-width: 1400px) {
     width: 42%;
   }
