@@ -6,6 +6,7 @@ import { BsTrash } from "react-icons/bs";
 import { BiSearchAlt } from "react-icons/bi";
 const TitleInput = styled.input`
   width: 30%;
+
   padding: 10px;
   border: 1px solid #7e57c2;
   outline-color: #512da8;

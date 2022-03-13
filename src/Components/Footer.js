@@ -161,7 +161,7 @@ const Footer = () => {
         >
           <CodeIcon />
         </Link>
-        <Text href="https://dadashow.netlify.app/">
+        <Text href="https://dadashow.me/">
           Designed & Built by <br />{" "}
           <span style={{ fontSize: "1rem" }}>Suleyman Dadashov</span>
         </Text>

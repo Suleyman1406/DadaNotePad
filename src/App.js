@@ -6,6 +6,7 @@ import store from "./redux/store";
 import Footer from "./Components/Footer";
 const Container = styled.div`
   text-align: center;
+  min-height: 80vh;
 `;
 
 function App() {
