@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { addNote, filterNotes, removeNote } from "../redux/noteslice";
-import { BsTrash } from "react-icons/bs";
-import { BiSearchAlt } from "react-icons/bi";
-const TitleInput = styled.input`
+
+export const TitleInput = styled.input`
   width: 30%;
 
   padding: 10px;
@@ -24,7 +20,7 @@ const TitleInput = styled.input`
     width: 90%;
   }
 `;
-const NoteInput = styled.textarea`
+export const NoteInput = styled.textarea`
   width: 30%;
   padding: 10px;
   margin-top: 25px;
@@ -44,7 +40,7 @@ const NoteInput = styled.textarea`
     width: 90%;
   }
 `;
-const Container = styled.div`
+export const Container = styled.div`
   width: 30%;
   margin: 10px auto;
   text-align: left;
@@ -62,7 +58,7 @@ const Container = styled.div`
   }
 `;
 
-const Color = styled.div`
+export const Color = styled.div`
   background-color: ${(props) => props.color};
   width: 40px;
   height: 40px;
@@ -91,7 +87,7 @@ const Color = styled.div`
     transform: translateY(5px);
   }
 `;
-const SaveButton = styled.button`
+export const SaveButton = styled.button`
   float: right;
   padding: 10px 15px;
   background-color: #7e57c2;
@@ -109,7 +105,7 @@ const SaveButton = styled.button`
     opacity: 0.9;
   }
 `;
-const NoteContainer = styled.div`
+export const NoteContainer = styled.div`
   width: 70%;
   height: fit-content;
   margin: 20px auto;
@@ -126,7 +122,7 @@ const NoteContainer = styled.div`
     width: 90%;
   }
 `;
-const Note = styled.div`
+export const Note = styled.div`
   width: 300px;
   height: 350px;
   display: inline-block;
@@ -150,7 +146,7 @@ const Note = styled.div`
     margin: 10px 0px;
   }
 `;
-const NoteTitle = styled.h4`
+export const NoteTitle = styled.h4`
   margin: 0;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -169,7 +165,7 @@ const NoteTitle = styled.h4`
     font-size: 13px;
   }
 `;
-const NoteBody = styled.p`
+export const NoteBody = styled.p`
   padding: 10px;
   height: 76%;
   text-align: left;
@@ -186,7 +182,7 @@ const NoteBody = styled.p`
     font-size: 11px;
   }
 `;
-const SearchContainer = styled.div`
+export const SearchContainer = styled.div`
   position: relative;
   width: 32%;
   margin: 20px auto 5px;
@@ -203,7 +199,7 @@ const SearchContainer = styled.div`
     width: 90%;
   }
 `;
-const SearchInput = styled.input`
+export const SearchInput = styled.input`
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
@@ -212,102 +208,3 @@ const SearchInput = styled.input`
   outline-color: #512da8;
   border-radius: 7px;
 `;
-
-const Content = () => {
-  const colorList = [
-    "rgba(240, 98, 146)",
-    "rgba(186, 104, 200)",
-    "rgba(79,195,247)",
-    "rgba(255, 213, 79)",
-    "rgba(174, 213, 129)",
-  ];
-  const [title, setTitle] = useState("");
-  const [note, setNote] = useState("");
-  const [color, setColor] = useState("");
-  const [search, setSearch] = useState("");
-  const notes = useSelector((state) => state.notes.value);
-  const dispatch = useDispatch();
-  const save = () => {
-    if (title === "") alert("Please write note title");
-    else if (note === "") alert("Please write note");
-    else if (color === "") alert("Please select color");
-    else {
-      dispatch(
-        addNote({
-          title: title,
-          note: note,
-          color: color.substring(0, color.length - 1),
-        })
-      );
-      setTitle("");
-      setNote("");
-      setColor("");
-    }
-  };
-  useEffect(() => {
-    dispatch(filterNotes(search));
-  }, [search]);
-  return (
-    <>
-      <TitleInput
-        placeholder="Note Title"
-        maxLength="22"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <br />
-      <NoteInput
-        placeholder="Write note..."
-        rows={8}
-        value={note}
-        onChange={(e) => setNote(e.target.value)}
-      />
-      <br />
-      <Container className="clearfix">
-        {colorList.map((c, i) => (
-          <Color key={i} color={c} onClick={() => setColor(c)}>
-            <span
-              style={{ fontSize: 18, display: color === c ? "inline" : "none" }}
-            >
-              ✓
-            </span>
-          </Color>
-        ))}
-        <SaveButton onClick={save}>Save ✓</SaveButton>
-      </Container>
-      <SearchContainer>
-        <SearchInput
-          placeholder="Write to search.."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <BiSearchAlt
-          style={{ position: "absolute", right: 12, fontSize: 22, top: 7 }}
-        />
-      </SearchContainer>
-      <NoteContainer>
-        {notes.map((note) => {
-          return (
-            <Note key={note.id} color={note.color + ")"}>
-              <NoteTitle color={note.color + ",0.4)"}>
-                {note.title}
-                <BsTrash
-                  style={{
-                    position: "absolute",
-                    top: 11,
-                    right: 10,
-                    fontSize: 20,
-                  }}
-                  onClick={() => dispatch(removeNote(note.id))}
-                />
-              </NoteTitle>
-              <NoteBody>{note.note}</NoteBody>
-            </Note>
-          );
-        })}
-      </NoteContainer>
-    </>
-  );
-};
-
-export default Content;
