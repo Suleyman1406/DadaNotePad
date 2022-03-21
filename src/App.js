@@ -6,7 +6,6 @@ import Footer from "./Components/Footer/Footer";
 import Content from "./Components/Content/Content";
 const Container = styled.div`
   text-align: center;
-  min-height: 80vh;
 `;
 
 function App() {

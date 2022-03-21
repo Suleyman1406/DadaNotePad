@@ -3,12 +3,18 @@ body {
   padding: 0;
   text-decoration: none;
   box-sizing: border-box;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   background-color: #ede7f6;
+  height: 100vh;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
